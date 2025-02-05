@@ -13,17 +13,17 @@ const colors = [
   "#FFA500", "#800080", "#008000", "#800000", "#008080", "#000080"
 ];
 
-// Generate a random color from colors
+// Generate a random color 
 function getRandomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
-// Starts the game
+// Starting the game
 function initGame() {
   targetColor = getRandomColor();
   colorBox.style.backgroundColor = targetColor;
 
-  // Clear previous options
+
   colorOptions.innerHTML = '';
 
   // Create 6 color buttons
@@ -35,10 +35,9 @@ function initGame() {
     }
   }
 
-  // Shuffle the options
+
   options.sort(() => Math.random() - 0.5);
 
-  // Render the buttons
   options.forEach(color => {
     const button = document.createElement('button');
     button.style.backgroundColor = color;
@@ -48,19 +47,25 @@ function initGame() {
 
   // Reset game status
   gameStatus.textContent = "Make your guess!";
+  gameStatus.classList.remove('correct', 'wrong');
 }
 
 // Handle user guess
 function handleGuess(guess) {
   if (guess === targetColor) {
     gameStatus.textContent = "Correct! 🎉";
+    gameStatus.classList.add('correct');
     score++;
     scoreElement.textContent = score;
     setTimeout(() => {
       initGame();
-    }, 1000); // Start a new game after 1 second
+    }, 1000); 
   } else {
     gameStatus.textContent = "Wrong! Try again.";
+    gameStatus.classList.add('wrong');
+    setTimeout(() => {
+      gameStatus.classList.remove('wrong');
+    }, 500); 
   }
 }
 
